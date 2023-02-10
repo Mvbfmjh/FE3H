@@ -1,9 +1,9 @@
 # FE3H
-Web application for Fire Emblem: Three Houses (日本語). Select and add units within your army and check: growth rates, stats, possible combinations of classes and skills, etc.
-ファイアーエムブレム：風花雪月向けのウェブアプリ
-ユニットを自軍へ追加し、ステータス・成長率・クラス・スキルを組み合わせてみよう！
+Web application for Fire Emblem: Three Houses (日本語). Select and add units within your army and check: growth rates, stats, possible combinations of classes and skills, etc.\
+ファイアーエムブレム：風花雪月向けのウェブアプリ\
+ユニットを自軍へ追加し、ステータス・成長率・クラス・スキルを組み合わせてみよう！\
 
-NOTE: This is a Django Application, and as far as I understand, requires a machine with Django installed to run it
+NOTE: This is a Django Application, and as far as I understand, requires a machine with Django installed to run it\
 Start an application within Django and add the folders to it (... I guess? I haven't tested it yet.)
 
 
@@ -22,3 +22,12 @@ Build v0.1:
         - Add/remove units
         - Update their level, classes, stats
         - Also check a units growth rate depending on the character and selected class
+
+Things to work on next:
+  - Add skills data model
+  - Skill list
+     - Which characters are able to learn it
+     - Requirements
+  - Page to assign battalions to Current Units
+
+??Maybe I should add a reference page or something to dedicate where I got this info from??
