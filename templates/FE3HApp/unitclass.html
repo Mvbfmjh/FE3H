@@ -1,0 +1,216 @@
+<a href="{% url 'FE3HApp:index' %}">< トップへ戻る</a><br>
+<a href="{% url 'FE3HApp:unitclass_list' %}">< クラスへ戻る</a><br>
+
+<h1>{{ unitclass.name }} ({{ unitclass.gender.gender }}) 有効:
+{% for weakness in unitclass_weakness %}
+	{{ weakness.weakness_id.weakness }}
+{% empty %}
+	-
+{% endfor %}
+</h1>
+<div style="float: left;margin-right:10px">
+	<table border="2" id="UnitClassTable">
+		<thead>
+			<tr class="header">
+				<th rowspan="2">階級</th>
+				<th rowspan="2">レベル条件</th>
+
+				<th colspan="9">成長率</th>
+				<th colspan="9">基礎</th>
+				<th colspan="11">技能</th>
+			</tr>
+			<tr class="header">
+				<th>HP</th>
+				<th>力</th>
+				<th>魔力</th>
+				<th>技</th>
+				<th>速さ</th>
+				<th>幸運</th>
+				<th>守備</th>
+				<th>魔防</th>
+				<th>魅力</th>
+
+				<th>HP</th>
+				<th>力</th>
+				<th>魔力</th>
+				<th>技</th>
+				<th>速さ</th>
+				<th>幸運</th>
+				<th>守備</th>
+				<th>魔防</th>
+				<th>魅力</th>
+
+
+				<th>剣</th>
+				<th>槍</th>
+				<th>斧</th>
+				<th>弓</th>
+				<th>格</th>
+				<th>理</th>
+				<th>信</th>
+				<th>指</th>
+				<th>重</th>
+				<th>馬</th>
+				<th>飛</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>{{ unitclass.grade }}</td>
+				<td>{{ unitclass.level_requirement }}</td>
+
+				<td>{{ unitclass.hp_growth }}</td>
+				<td>{{ unitclass.str_growth }}</td>
+				<td>{{ unitclass.mag_growth }}</td>
+				<td>{{ unitclass.dex_growth }}</td>
+				<td>{{ unitclass.spd_growth }}</td>
+				<td>{{ unitclass.lck_growth }}</td>
+				<td>{{ unitclass.def_growth }}</td>
+				<td>{{ unitclass.res_growth }}</td>
+				<td>{{ unitclass.cha_growth }}</td>
+
+				<td>
+					{% if unitclass.hp_base == None %}
+						{{ '-' }}
+					{% else %}
+						{{ unitclass.hp_base }}
+					{% endif %}
+				</td>
+				<td>
+					{% if unitclass.str_base == None %}
+						{{ '-' }}
+					{% else %}
+						{{ unitclass.str_base }}
+					{% endif %}
+				</td>
+				<td>
+					{% if unitclass.mag_base == None %}
+						{{ '-' }}
+					{% else %}
+						{{ unitclass.mag_base }}
+					{% endif %}
+				</td>
+				<td>
+					{% if unitclass.dex_base == None %}
+						{{ '-' }}
+					{% else %}
+						{{ unitclass.dex_base }}
+					{% endif %}
+				</td>
+				<td>
+					{% if unitclass.spd_base == None %}
+						{{ '-' }}
+					{% else %}
+						{{ unitclass.spd_base }}
+					{% endif %}
+				</td>
+				<td>
+					{% if unitclass.lck_base == None %}
+						{{ '-' }}
+					{% else %}
+						{{ unitclass.lck_base }}
+					{% endif %}
+				</td>
+				<td>
+					{% if unitclass.def_base == None %}
+						{{ '-' }}
+					{% else %}
+						{{ unitclass.def_base }}
+					{% endif %}
+				</td>
+				<td>
+					{% if unitclass.res_base == None %}
+						{{ '-' }}
+					{% else %}
+						{{ unitclass.res_base }}
+					{% endif %}
+				</td>
+				<td>
+					{% if unitclass.cha_base == None %}
+						{{ '-' }}
+					{% else %}
+						{{ unitclass.cha_base }}
+					{% endif %}
+				</td>
+
+				<td>
+					{% if unitclass.prof_sword == None %}
+						{{ '-' }}
+					{% else %}
+						{{ unitclass.prof_sword }}
+					{% endif %}
+				</td>
+				<td>
+					{% if unitclass.prof_lance == None %}
+						{{ '-' }}
+					{% else %}
+						{{ unitclass.prof_lance }}
+					{% endif %}
+				</td>
+				<td>
+					{% if unitclass.prof_axe == None %}
+						{{ '-' }}
+					{% else %}
+						{{ unitclass.prof_axe }}
+					{% endif %}
+				</td>
+				<td>
+					{% if unitclass.prof_bow == None %}
+						{{ '-' }}
+					{% else %}
+						{{ unitclass.prof_bow }}
+					{% endif %}
+				</td>
+				<td>
+					{% if unitclass.prof_brawl == None %}
+						{{ '-' }}
+					{% else %}
+						{{ unitclass.prof_brawl }}
+					{% endif %}
+				</td>
+				<td>
+					{% if unitclass.prof_reason == None %}
+						{{ '-' }}
+					{% else %}
+						{{ unitclass.prof_reason }}
+					{% endif %}
+				</td>
+				<td>
+					{% if unitclass.prof_faith == None %}
+						{{ '-' }}
+					{% else %}
+						{{ unitclass.prof_faith }}
+					{% endif %}
+				</td>
+				<td>
+					{% if unitclass.prof_authority == None %}
+						{{ '-' }}
+					{% else %}
+						{{ unitclass.prof_authority }}
+					{% endif %}
+				</td>
+				<td>
+					{% if unitclass.prof_armor == None %}
+						{{ '-' }}
+					{% else %}
+						{{ unitclass.prof_armor }}
+					{% endif %}
+				</td>
+				<td>
+					{% if unitclass.prof_riding == None %}
+						{{ '-' }}
+					{% else %}
+						{{ unitclass.prof_riding }}
+					{% endif %}
+				</td>
+				<td>
+					{% if unitclass.prof_flying == None %}
+						{{ '-' }}
+					{% else %}
+						{{ unitclass.prof_flying }}
+					{% endif %}
+				</td>
+			</tr>
+		</tbody>
+	</table>	
+</div>

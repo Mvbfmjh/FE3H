@@ -1,0 +1,23 @@
+<h1>FE風花雪月データ確認</h1>
+<div>
+	<table border="2">
+		<thead>
+			<th>メニュー</th>
+		</thead>
+		<tbody>
+			<tr><td><li><a href="{% url 'FE3HApp:character_list' %}">キャラ</a></li></td></tr>
+			<tr><td><li><a href="{% url 'FE3HApp:affiliation_list' %}">所属</a></li></td></tr>
+			<tr><td><li><a href="{% url 'FE3HApp:battalion_list' %}">騎士団</a></li></td></tr>
+			<tr><td><li><a href="{% url 'FE3HApp:unitclass_list' %}">クラス</a></li></td></tr>
+			<tr><td><li><a href="{% url 'FE3HApp:movement_list' %}">移動種</a></li></td></tr>
+		</tbody>
+	</table>
+</div>
+<div>
+	<h2>自軍</h2>
+	<table>
+		<tbody>
+			<tr><td><a href="{% url 'FE3HApp:currentunit_list' %}">自軍</a></td></tr>
+		</tbody>
+	</table>
+</div>

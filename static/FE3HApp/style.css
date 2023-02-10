@@ -1,0 +1,131 @@
+li a {
+	color:  green;
+}
+
+
+#UnitClassTable {
+  /*border-collapse: collapse; /* Collapse borders */
+  /*width: 100%; /* Full-width */
+  /*border: 1px solid #ddd; /* Add a grey border */
+  /*font-size: 14px; /* Increase font-size */
+  table-layout: fixed;
+}
+
+#UnitClassTable th, #UnitClassTable td {
+  text-align: left; /* Left-align text */
+  padding: 5px; /* Add padding */
+}
+
+#UnitClassTable tr {
+  /* Add a bottom border to all table rows */
+  border-bottom: 2px solid #ddd;
+}
+
+#UnitClassTable tr.header, #UnitClassTable tr.subheader, #UnitClassTable tr:hover {
+  /* Add a grey background color to the table header and on hover */
+  background-color: #f1f1f1;
+}
+
+#UnitClassTable tr.subheader > th  {
+	width: 14px;
+}
+
+#CharacterTable {
+  /*border-collapse: collapse; /* Collapse borders */
+  /*width: 100%; /* Full-width */
+  /*border: 1px solid #ddd; /* Add a grey border */
+  /*font-size: px; /* Increase font-size */
+  table-layout: fixed;
+}
+
+#CharacterTable th, #CharacterTable td {
+  text-align: left; /* Left-align text */
+  padding: 5px; /* Add padding */
+}
+
+#CharacterTable tr {
+  /* Add a bottom border to all table rows */
+  border-bottom: 1px solid #ddd;
+}
+
+#CharacterTable tr.header, #CharacterTable tr:hover {
+  /* Add a grey background color to the table header and on hover */
+  background-color: #f1f1f1;
+}
+
+#BattalionTable {
+	table-layout: fixed;
+}
+
+#BattalionTable th, #CharacterTable td {
+	text-align: left;
+	padding: 5px;
+}
+
+#BattalionTable tr {
+	border-bottom: 1px solid #ddd;
+}
+
+#CharacterTable tr.header, #CharacterTable tr:hover {
+  /* Add a grey background color to the table header and on hover */
+  background-color: #f1f1f1;
+}
+
+#CurrentUnitTable {
+  /*border-collapse: collapse; /* Collapse borders */
+  /*width: 100%; /* Full-width */
+  /*border: 1px solid #ddd; /* Add a grey border */
+  /*font-size: 14px; /* Increase font-size */
+  table-layout: fixed;
+}
+
+
+#CurrentUnitTable th {
+  text-align: left; /* Left-align text */
+  padding: 5px; /* Add padding */
+}
+
+#CurrentUnitTable tr {
+  /* Add a bottom border to all table rows */
+  border-bottom: 2px solid #ddd;
+}
+
+#CurrentUnitTable tr.header > th, #CurrentUnitTable tr.subheader > th{
+  /* Add a grey background color to the table header and on hover */
+  background-color: #f1f1f1;
+  text-align: center;
+}
+
+#CurrentUnitTable tr.unit > td.num {
+  text-align: right;
+}
+
+#CurrentUnitTable tr.unit > td.txt {
+  text-align: center;
+}
+
+#CurrentUnitTable tr:hover {
+  background-color: #f1f1f1;
+}
+
+#CurrentUnitTable tr.subheader > th {
+  width: 14px;
+  text-align: center;
+}
+
+#CurrentUnitTable .name, #CurrentUnitTable tr.name > th, #CurrentUnitTable tr.name > td {
+  font-weight: bold;
+}
+
+#CurrentUnitTable .clicked, #CurrentUnitTable tr.clicked > td {
+  background-color: #bfbfbf;
+}
+
+#CurrentUnitTable .hidden, #CurrentUnitTable tbody.clicked > tr {
+  display: none;
+}
+
+#CurrentUnitTable .input {
+  width: 46px;
+  text-align: right;
+}

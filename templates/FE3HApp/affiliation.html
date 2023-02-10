@@ -1,0 +1,53 @@
+<a href="{% url 'FE3HApp:index' %}">< トップへ戻る</a><br>
+<a href="{% url 'FE3HApp:affiliation_list' %}">< 所属へ戻る</a><br>
+
+<div style="float: left;margin-right:10px">
+	{% if affl_chara_list %}
+	<h2>Characters</h2>
+	<table border="1">
+		<thead>
+			<tr>
+				<th>名前</th>
+				<th>性別</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for chara in affl_chara_list %}
+				<tr>
+					<td><a href="{% url 'FE3HApp:character' chara.id %}">{{ chara.name }}</a></td>
+					<td>{{ chara.gender.gender }}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{% endif %}
+</div>
+<div style="float: left;margin-right:10px">
+	{% if affl_btl_list %}
+	<h2>Battalions</h2>
+	<table border="1">
+		<thead>
+			<tr>
+				<th>騎士団名</th>
+				<th>飛行</th>
+				<th>戦力</th>
+				<th>計略</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for battalion in affl_btl_list %}
+				<tr>
+					<td><a href="{% url 'FE3HApp:battalion' battalion.id %}">{{ battalion.name }}</a></td>
+					{% if battalion.movement.is_flying == True %}
+						<td>飛行</td>
+					{% else %}
+						<td>-</td>
+					{% endif %}
+					<td>{{ battalion.endurance }}</td>
+					<td>{{ battalion.gambit }}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{% endif %}
+</div>

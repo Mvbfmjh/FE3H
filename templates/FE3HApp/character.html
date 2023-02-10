@@ -1,0 +1,76 @@
+<a href="{% url 'FE3HApp:index' %}">< トップへ戻る</a><br>
+<a href="{% url 'FE3HApp:character_list' %}">< キャラへ戻る</a><br>
+
+<h1>{{ character.name }} ({{ character.gender.gender }}) 所属：<a href="{% url 'FE3HApp:affiliation' character.affiliation_id %}">{{ character.affiliation.affiliation }}</a></h1>
+
+<div style="float: left;margin-right:10px">
+	<h2>成長率</h2>
+	<table border="1">
+		<thead>
+			<tr>
+				<!-- 成長率 -->
+				<th>HP</th>
+				<th>力</th>
+				<th>魔力</th>
+				<th>技</th>
+				<th>速さ</th>
+				<th>幸運</th>
+				<th>守備</th>
+				<th>魔防</th>
+				<th>魅力</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<!-- 成長率 -->
+				<td>{{ character.hp_growth }}</td>
+				<td>{{ character.str_growth }}</td>
+				<td>{{ character.mag_growth }}</td>
+				<td>{{ character.dex_growth }}</td>
+				<td>{{ character.spd_growth }}</td>
+				<td>{{ character.lck_growth }}</td>
+				<td>{{ character.def_growth }}</td>
+				<td>{{ character.res_growth }}</td>
+				<td>{{ character.cha_growth }}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div style="float: left;margin-right:10px">
+	<h2>上限</h2>
+	<table border="1">
+		<thead>
+			<tr>
+				<!-- 上限 -->
+				<th>HP</th>
+				<th>力</th>
+				<th>魔力</th>
+				<th>技</th>
+				<th>速さ</th>
+				<th>幸運</th>
+				<th>守備</th>
+				<th>魔防</th>
+				<th>魅力</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<!-- 上限 -->
+				<td>{{ character.hp_limit }}</td>
+				<td>{{ character.str_limit }}</td>
+				<td>{{ character.mag_limit }}</td>
+				<td>{{ character.dex_limit }}</td>
+				<td>{{ character.spd_limit }}</td>
+				<td>{{ character.lck_limit }}</td>
+				<td>{{ character.def_limit }}</td>
+				<td>{{ character.res_limit }}</td>
+				<td>{{ character.cha_limit }}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+
+			
+					

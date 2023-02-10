@@ -1,0 +1,739 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'FE3HApp/style.css' %}">
+
+<a href="{% url 'FE3HApp:index' %}">< トップへ戻る</a><br>
+
+{% csrf_token %}
+
+<div>
+	<h3>追加ユニット：{{ request.session.test_selected_chara }}{{message}}</h3>
+</div>
+
+<div style="float: left;margin-right:10px">
+	<h1>自軍</h1>
+	<button id="saveButton" onclick="sendUpdateRequest()">保存</button>
+	<button id="addButton" onclick="openAddDialog()">追加</button>
+	<table border="2" id="CurrentUnitTable">
+		<thead>
+			<tr class="header">
+				<th rowspan="2">キャラ名</th>
+				<th rowspan="2">レベル</th>
+				<th rowspan="2" style="width: 140px;">クラス</th>
+				<th colspan="9">ステータス</th>
+				<th colspan="11">技能</th>
+				<th colspan="9">成長率</th>
+				<th rowspan="2">削<br>除</th>
+			</tr>
+			<tr class="subheader">
+				<th>H<br>P</th>
+				<th>力</th>
+				<th>魔力</th>
+				<th>技</th>
+				<th>速さ</th>
+				<th>幸運</th>
+				<th>守備</th>
+				<th>魔防</th>
+				<th>魅力</th>
+
+				<th>剣</th>
+				<th>槍</th>
+				<th>斧</th>
+				<th>弓</th>
+				<th>格</th>
+				<th>理</th>
+				<th>信</th>
+				<th>指</th>
+				<th>重</th>
+				<th>馬</th>
+				<th>飛</th>
+
+				<th>H<br>P</th>
+				<th>力</th>
+				<th>魔力</th>
+				<th>技</th>
+				<th>速さ</th>
+				<th>幸運</th>
+				<th>守備</th>
+				<th>魔防</th>
+				<th>魅力</th>
+			</tr>
+		</thead>
+
+		<tbody id="tbodyUnits">
+			{% if currentunit_list %}
+				{% for unit in currentunit_list %}
+				<!-- 表示データ -->
+				<tr class="unit" id="{{ unit.character.name }}-data">
+					<td class="txt name" id="{{ unit.character.name }}-data-name">{{ unit.character.name }}</td>
+					<td class="num" id="{{ unit.character.name }}-data-lvl">{{ unit.level }}</td>
+					
+					<td class="txt" id="{{ unit.character.name }}-data-class">{% if unit.unit_class %}{{ unit.unit_class.name }}{% else %}---{% endif %}</td>
+
+					<td class="num" id="{{ unit.character.name }}-data-hp">{{ unit.unit_hp }}</td>
+					<td class="num" id="{{ unit.character.name }}-data-str">{{ unit.unit_str }}</td>
+					<td class="num" id="{{ unit.character.name }}-data-mag">{{ unit.unit_mag }}</td>
+					<td class="num" id="{{ unit.character.name }}-data-dex">{{ unit.unit_dex }}</td>
+					<td class="num" id="{{ unit.character.name }}-data-spd">{{ unit.unit_spd }}</td>
+					<td class="num" id="{{ unit.character.name }}-data-lck">{{ unit.unit_lck }}</td>
+					<td class="num" id="{{ unit.character.name }}-data-def">{{ unit.unit_def }}</td>
+					<td class="num" id="{{ unit.character.name }}-data-res">{{ unit.unit_res }}</td>
+					<td class="num" id="{{ unit.character.name }}-data-cha">{{ unit.unit_cha }}</td>
+
+					<td class="txt" id="{{ unit.character.name }}-data-sword">{{ unit.prof_sword }}</td>
+					<td class="txt" id="{{ unit.character.name }}-data-lance">{{ unit.prof_lance }}</td>
+					<td class="txt" id="{{ unit.character.name }}-data-axe">{{ unit.prof_axe }}</td>
+					<td class="txt" id="{{ unit.character.name }}-data-bow">{{ unit.prof_bow }}</td>
+					<td class="txt" id="{{ unit.character.name }}-data-brawl">{{ unit.prof_brawl }}</td>
+					<td class="txt" id="{{ unit.character.name }}-data-reason">{{ unit.prof_reason }}</td>
+					<td class="txt" id="{{ unit.character.name }}-data-faith">{{ unit.prof_faith }}</td>
+					<td class="txt" id="{{ unit.character.name }}-data-auth">{{ unit.prof_authority }}</td>
+					<td class="txt" id="{{ unit.character.name }}-data-armor">{{ unit.prof_armor }}</td>
+					<td class="txt" id="{{ unit.character.name }}-data-ride">{{ unit.prof_riding }}</td>
+					<td class="txt" id="{{ unit.character.name }}-data-fly">{{ unit.prof_flying }}</td>
+
+					<td class="num" id="{{ unit.character.name }}-data-growth-hp">{% if unit.unit_class == None %}{{ unit.character.hp_growth }}{% else %}{{ unit.character.hp_growth|add:unit.unit_class.hp_growth }}{% endif %}</td>
+					<td class="num" id="{{ unit.character.name }}-data-growth-str">{% if unit.unit_class == None %}{{ unit.character.str_growth }}{% else %}{{ unit.character.str_growth|add:unit.unit_class.str_growth }}{% endif %}</td>
+					<td class="num" id="{{ unit.character.name }}-data-growth-mag">{% if unit.unit_class == None %}{{ unit.character.mag_growth }}{% else %}{{ unit.character.mag_growth|add:unit.unit_class.mag_growth }}{% endif %}</td>
+					<td class="num" id="{{ unit.character.name }}-data-growth-dex">{% if unit.unit_class == None %}{{ unit.character.dex_growth }}{% else %}{{ unit.character.dex_growth|add:unit.unit_class.dex_growth }}{% endif %}</td>
+					<td class="num" id="{{ unit.character.name }}-data-growth-spd">{% if unit.unit_class == None %}{{ unit.character.spd_growth }}{% else %}{{ unit.character.spd_growth|add:unit.unit_class.spd_growth }}{% endif %}</td>
+					<td class="num" id="{{ unit.character.name }}-data-growth-lck">{% if unit.unit_class == None %}{{ unit.character.lck_growth }}{% else %}{{ unit.character.lck_growth|add:unit.unit_class.lck_growth }}{% endif %}</td>
+					<td class="num" id="{{ unit.character.name }}-data-growth-def">{% if unit.unit_class == None %}{{ unit.character.def_growth }}{% else %}{{ unit.character.def_growth|add:unit.unit_class.def_growth }}{% endif %}</td>
+					<td class="num" id="{{ unit.character.name }}-data-growth-res">{% if unit.unit_class == None %}{{ unit.character.res_growth }}{% else %}{{ unit.character.res_growth|add:unit.unit_class.res_growth }}{% endif %}</td>
+					<td class="num" id="{{ unit.character.name }}-data-growth-cha">{% if unit.unit_class == None %}{{ unit.character.cha_growth }}{% else %}{{ unit.character.cha_growth|add:unit.unit_class.hp_growth }}{% endif %}</td>
+					<th style="font-weight: bold;" onclick="sendRemoveRequest('{{ unit.character.name }}')">&cross;</th>
+				</tr>
+
+				<!-- 変更・入力 -->
+				<tr class="unit hidden" id="{{ unit.character.name }}-input">
+					<td class="txt name" onclick="rowHidden('{{ unit.character.name }}')">{{ unit.character.name }}</td>
+					<td class="num">
+						<input class="input" type="number" min="0" max="99" id="{{ unit.character.name }}-input-lvl" name="{{ unit.character.name }}-input-lvl" value="{{ unit.level }}" onchange="hideClass('{{ unit.character.name }}-input')" onfocus="hideClass('{{ unit.character.name }}-input')">
+					</td>
+					
+					<td>
+						<select id="{{ unit.character.name }}-input-class" name="{{ unit.character.name }}-input-class" onchange="updateGrowth('{{ unit.character.name }}-input')">
+							<option value="---" selected>---</option>
+						</select>
+					</td>
+
+					<td class="num">
+						<input class="input" type="number" min="0" max="{{ unit.character.hp_limit }}" id="{{ unit.character.name }}-input-hp" name="{{ unit.character.name }}-input-hp" value="{{ unit.unit_hp }}" onchange="validateValue('{{ unit.character.name }}-input-hp')">
+					</td>
+					<td class="num">
+						<input class="input" type="number" min="0" max="{{ unit.character.str_limit }}" id="{{ unit.character.name }}-input-str" name="{{ unit.character.name }}-input-str" value="{{ unit.unit_str }}" onchange="validateValue('{{ unit.character.name }}-input-str')">
+					</td>
+					<td class="num">
+						<input class="input" type="number" min="0" max="{{ unit.character.mag_limit }}" id="{{ unit.character.name }}-input-mag" name="{{ unit.character.name }}-input-mag" value="{{ unit.unit_mag }}" onchange="validateValue('{{ unit.character.name }}-input-mag')">
+					</td>
+					<td class="num">
+						<input class="input" type="number" min="0" max="{{ unit.character.dex_limit }}" id="{{ unit.character.name }}-input-dex" name="{{ unit.character.name }}-input-dex" value="{{ unit.unit_dex }}" onchange="validateValue('{{ unit.character.name }}-input-dex')">
+					</td>
+					<td class="num">
+						<input class="input" type="number" min="0" max="{{ unit.character.spd_limit }}" id="{{ unit.character.name }}-input-spd" name="{{ unit.character.name }}-input-spd" value="{{ unit.unit_spd }}" onchange="validateValue('{{ unit.character.name }}-input-spd')">
+					</td>
+					<td class="num">
+						<input class="input" type="number" min="0" max="{{ unit.character.lck_limit }}" id="{{ unit.character.name }}-input-lck" name="{{ unit.character.name }}-input-lck" value="{{ unit.unit_lck }}" onchange="validateValue('{{ unit.character.name }}-input-lck')">
+					</td>
+					<td class="num">
+						<input class="input" type="number" min="0" max="{{ unit.character.def_limit }}" id="{{ unit.character.name }}-input-def" name="{{ unit.character.name }}-input-def" value="{{ unit.unit_def }}" onchange="validateValue('{{ unit.character.name }}-input-def')">
+					</td>
+					<td class="num">
+						<input class="input" type="number" min="0" max="{{ unit.character.res_limit }}" id="{{ unit.character.name }}-input-res" name="{{ unit.character.name }}-input-res" value="{{ unit.unit_res }}" onchange="validateValue('{{ unit.character.name }}-input-res')">
+					</td>
+					<td class="num">
+						<input class="input" type="number" min="0" max="{{ unit.character.cha_limit }}" id="{{ unit.character.name }}-input-cha" name="{{ unit.character.name }}-input-cha" value="{{ unit.unit_cha }}" onchange="validateValue('{{ unit.character.name }}-input-cha')">
+					</td>
+
+					<td class="txt">
+						<select id="{{ unit.character.name }}-input-sword" name="{{ unit.character.name }}-input-sword">
+							<option selected value="{{ unit.prof_sword }}">{{ unit.prof_sword }}</option>
+							<option value="E">E</option>
+							<option value="E+">E+</option>
+							<option value="D">D</option>
+							<option value="D+">D+</option>
+							<option value="C">C</option>
+							<option value="C+">C+</option>
+							<option value="B">B</option>
+							<option value="B+">B+</option>
+							<option value="A">A</option>
+							<option value="A+">A+</option>
+							<option value="S">S</option>
+							<option value="S+">S+</option>
+						</select>
+					</td>
+					<td class="txt">
+						<select id="{{ unit.character.name }}-input-lance" name="{{ unit.character.name }}-input-lance">
+							<option selected value="{{ unit.prof_lance }}">{{ unit.prof_lance }}</option>
+							<option value="E">E</option>
+							<option value="E+">E+</option>
+							<option value="D">D</option>
+							<option value="D+">D+</option>
+							<option value="C">C</option>
+							<option value="C+">C+</option>
+							<option value="B">B</option>
+							<option value="B+">B+</option>
+							<option value="A">A</option>
+							<option value="A+">A+</option>
+							<option value="S">S</option>
+							<option value="S+">S+</option>
+						</select>
+					</td>
+					<td class="txt">
+						<select id="{{ unit.character.name }}-input-axe" name="{{ unit.character.name }}-input-axe">
+							<option selected value="{{ unit.prof_axe }}">{{ unit.prof_axe }}</option>
+							<option value="E">E</option>
+							<option value="E+">E+</option>
+							<option value="D">D</option>
+							<option value="D+">D+</option>
+							<option value="C">C</option>
+							<option value="C+">C+</option>
+							<option value="B">B</option>
+							<option value="B+">B+</option>
+							<option value="A">A</option>
+							<option value="A+">A+</option>
+							<option value="S">S</option>
+							<option value="S+">S+</option>
+						</select>
+					</td>
+					<td class="txt">
+						<select id="{{ unit.character.name }}-input-bow" name="{{ unit.character.name }}-input-bow">
+							<option selected value="{{ unit.prof_bow }}">{{ unit.prof_bow }}</option>
+							<option value="E">E</option>
+							<option value="E+">E+</option>
+							<option value="D">D</option>
+							<option value="D+">D+</option>
+							<option value="C">C</option>
+							<option value="C+">C+</option>
+							<option value="B">B</option>
+							<option value="B+">B+</option>
+							<option value="A">A</option>
+							<option value="A+">A+</option>
+							<option value="S">S</option>
+							<option value="S+">S+</option>
+						</select>
+					</td>
+					<td class="txt">
+						<select id="{{ unit.character.name }}-input-brawl" name="{{ unit.character.name }}-input-brawl">
+							<option selected value="{{ unit.prof_brawl }}">{{ unit.prof_brawl }}</option>
+							<option value="E">E</option>
+							<option value="E+">E+</option>
+							<option value="D">D</option>
+							<option value="D+">D+</option>
+							<option value="C">C</option>
+							<option value="C+">C+</option>
+							<option value="B">B</option>
+							<option value="B+">B+</option>
+							<option value="A">A</option>
+							<option value="A+">A+</option>
+							<option value="S">S</option>
+							<option value="S+">S+</option>
+						</select>
+					</td>
+					<td class="txt">
+						<select id="{{ unit.character.name }}-input-reason" name="{{ unit.character.name }}-input-reason">
+							<option selected value="{{ unit.prof_reason }}">{{ unit.prof_reason }}</option>
+							<option value="E">E</option>
+							<option value="E+">E+</option>
+							<option value="D">D</option>
+							<option value="D+">D+</option>
+							<option value="C">C</option>
+							<option value="C+">C+</option>
+							<option value="B">B</option>
+							<option value="B+">B+</option>
+							<option value="A">A</option>
+							<option value="A+">A+</option>
+							<option value="S">S</option>
+							<option value="S+">S+</option>
+						</select>
+					</td>
+					<td class="txt">
+						<select id="{{ unit.character.name }}-input-faith" name="{{ unit.character.name }}-input-faith">
+							<option selected value="{{ unit.prof_faith }}">{{ unit.prof_faith }}</option>
+							<option value="E">E</option>
+							<option value="E+">E+</option>
+							<option value="D">D</option>
+							<option value="D+">D+</option>
+							<option value="C">C</option>
+							<option value="C+">C+</option>
+							<option value="B">B</option>
+							<option value="B+">B+</option>
+							<option value="A">A</option>
+							<option value="A+">A+</option>
+							<option value="S">S</option>
+							<option value="S+">S+</option>
+						</select>
+					</td>
+					<td class="txt">
+						<select id="{{ unit.character.name }}-input-auth" name="{{ unit.character.name }}-input-auth">
+							<option selected value="{{ unit.prof_authority }}">{{ unit.prof_authority }}</option>
+							<option value="E">E</option>
+							<option value="E+">E+</option>
+							<option value="D">D</option>
+							<option value="D+">D+</option>
+							<option value="C">C</option>
+							<option value="C+">C+</option>
+							<option value="B">B</option>
+							<option value="B+">B+</option>
+							<option value="A">A</option>
+							<option value="A+">A+</option>
+							<option value="S">S</option>
+							<option value="S+">S+</option>
+						</select>
+					</td>
+					<td class="txt">
+						<select id="{{ unit.character.name }}-input-armor" name="{{ unit.character.name }}-input-armor">
+							<option selected value="{{ unit.prof_armor }}">{{ unit.prof_armor }}</option>
+							<option value="E">E</option>
+							<option value="E+">E+</option>
+							<option value="D">D</option>
+							<option value="D+">D+</option>
+							<option value="C">C</option>
+							<option value="C+">C+</option>
+							<option value="B">B</option>
+							<option value="B+">B+</option>
+							<option value="A">A</option>
+							<option value="A+">A+</option>
+							<option value="S">S</option>
+							<option value="S+">S+</option>
+						</select>
+					</td>
+					<td class="txt">
+						<select id="{{ unit.character.name }}-input-ride" name="{{ unit.character.name }}-input-ride">
+							<option selected value="{{ unit.prof_riding }}">{{ unit.prof_riding }}</option>
+							<option value="E">E</option>
+							<option value="E+">E+</option>
+							<option value="D">D</option>
+							<option value="D+">D+</option>
+							<option value="C">C</option>
+							<option value="C+">C+</option>
+							<option value="B">B</option>
+							<option value="B+">B+</option>
+							<option value="A">A</option>
+							<option value="A+">A+</option>
+							<option value="S">S</option>
+							<option value="S+">S+</option>
+						</select>
+					</td>
+					<td class="txt">
+						<select id="{{ unit.character.name }}-input-fly" name="{{ unit.character.name }}-input-fly">
+							<option selected value="{{ unit.prof_flying }}">{{ unit.prof_flying }}</option>
+							<option value="E">E</option>
+							<option value="E+">E+</option>
+							<option value="D">D</option>
+							<option value="D+">D+</option>
+							<option value="C">C</option>
+							<option value="C+">C+</option>
+							<option value="B">B</option>
+							<option value="B+">B+</option>
+							<option value="A">A</option>
+							<option value="A+">A+</option>
+							<option value="S">S</option>
+							<option value="S+">S+</option>
+						</select>
+					</td>
+
+					<td class="num" id="{{ unit.character.name }}-input-growth-hp">{% if unit.unit_class == None %}{{ unit.character.hp_growth }}{% else %}{{ unit.character.hp_growth|add:unit.unit_class.hp_growth }}{% endif %}</td>
+					<td class="num" id="{{ unit.character.name }}-input-growth-str">{% if unit.unit_class == None %}{{ unit.character.str_growth }}{% else %}{{ unit.character.str_growth|add:unit.unit_class.str_growth }}{% endif %}</td>
+					<td class="num" id="{{ unit.character.name }}-input-growth-mag">{% if unit.unit_class == None %}{{ unit.character.mag_growth }}{% else %}{{ unit.character.mag_growth|add:unit.unit_class.mag_growth }}{% endif %}</td>
+					<td class="num" id="{{ unit.character.name }}-input-growth-dex">{% if unit.unit_class == None %}{{ unit.character.dex_growth }}{% else %}{{ unit.character.dex_growth|add:unit.unit_class.dex_growth }}{% endif %}</td>
+					<td class="num" id="{{ unit.character.name }}-input-growth-spd">{% if unit.unit_class == None %}{{ unit.character.spd_growth }}{% else %}{{ unit.character.spd_growth|add:unit.unit_class.spd_growth }}{% endif %}</td>
+					<td class="num" id="{{ unit.character.name }}-input-growth-lck">{% if unit.unit_class == None %}{{ unit.character.lck_growth }}{% else %}{{ unit.character.lck_growth|add:unit.unit_class.lck_growth }}{% endif %}</td>
+					<td class="num" id="{{ unit.character.name }}-input-growth-def">{% if unit.unit_class == None %}{{ unit.character.def_growth }}{% else %}{{ unit.character.def_growth|add:unit.unit_class.def_growth }}{% endif %}</td>
+					<td class="num" id="{{ unit.character.name }}-input-growth-res">{% if unit.unit_class == None %}{{ unit.character.res_growth }}{% else %}{{ unit.character.res_growth|add:unit.unit_class.res_growth }}{% endif %}</td>
+					<td class="num" id="{{ unit.character.name }}-input-growth-cha">{% if unit.unit_class == None %}{{ unit.character.cha_growth }}{% else %}{{ unit.character.cha_growth|add:unit.unit_class.hp_growth }}{% endif %}</td>
+					<th style="font-weight: bold;" onclick="sendRemoveRequest('{{ unit.character.name }}')">&cross;</th>
+				</tr>
+				{% endfor %}
+			{% else %}
+				<tr>
+					<td colspan="31" style="text-align: center;">自軍キャラがいません</td>
+				</tr>
+			{% endif %}
+		</tbody>
+	</table>
+	<!--<a href="{% url 'FE3HApp:currentunit_add' %}">キャラ追加</a>-->
+</div>
+
+<dialog id="addDialog" style="width: 200px; height: 150px;">
+	<table>
+		<h3>キャラ追加</h3>
+		<select id="newCharaList" style="font-size: 16px;">
+			<option selected value>---</option>
+		</select>
+		<tr>
+			<td><button id="cancelAdd" onclick="closeDialog('addDialog')">キャンセル</button></td>
+			<td><button id="addChara" onclick="sendAddRequest('addDialog')">追加</button></td>
+		</tr>
+	</table>
+</dialog>
+
+
+
+<script>
+const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+async function sendRemoveRequest(name) {
+
+	let response = await fetch("{% url 'FE3HApp:currentunit_remove' %}", {
+		method: 'POST',
+		headers: {'Content-Type': 'application/json', "X-CSRFToken": csrftoken},
+		body: JSON.stringify({'character': name}),
+	});
+
+	if (response['redirected'])
+		window.location.href = response['url'];
+	else {
+		let result = await response.text();
+		alert(result);
+	}
+}
+
+async function sendUpdateRequest() {
+	var tbody, tr, CharRow, CharList, CharObj;
+	var tags = ['-name', '-lvl', '-class', '-hp', '-str', '-mag', '-dex', '-spd', '-lck', '-def', '-res', '-cha', '-sword', '-lance', '-axe', '-bow', '-brawl', '-reason', '-faith', '-auth', '-armor', '-ride', '-fly', ];
+	var fields = ['character', 'level', 'unit_class', 'unit_hp', 'unit_str', 'unit_mag', 'unit_dex', 'unit_spd', 'unit_lck', 'unit_def', 'unit_res', 'unit_cha', 'prof_sword', 'prof_lance', 'prof_axe', 'prof_bow', 'prof_brawl', 'prof_reason', 'prof_faith', 'prof_authority', 'prof_armor', 'prof_riding', 'prof_flying', ]
+	CharRow = [];
+	CharList = [];
+
+	hideInputs('');
+
+	tbody = document.getElementById("tbodyUnits");
+	tr = tbody.getElementsByTagName("tr");
+	for (let row of tr)
+		if (row.id.includes("-data"))
+			CharRow.push(row);
+	for (let row of CharRow){
+		CharObj = {};
+
+		for (let field of fields) 
+			CharObj[field] = null;
+
+		for (let i = 0; i < row.cells.length-1; i++) {
+			if (row.cells[i].id.includes(tags[i])) {
+				//console.log(row.cells[i].id);
+				if (tags[i] === '-class' && row.cells[i].innerHTML ==='---') {
+					//console.log(null);
+					CharObj[fields[i]] = null
+				} else {
+					//console.log(row.cells[i].innerHTML);
+					CharObj[fields[i]] = row.cells[i].innerHTML;
+				}
+			}
+		}
+		CharList.push(CharObj);
+	}
+	console.log(CharList);
+	let response = await fetch("{% url 'FE3HApp:currentunit_update' %}", {
+		method: 'POST',
+		headers: {'Content-Type': 'application/json', "X-CSRFToken": csrftoken},		
+		body: JSON.stringify(CharList),
+	});
+	let code = await response.text();
+	alert(code);
+}
+
+async function openAddDialog() {
+	var dialog = document.getElementById('addDialog');
+	var list = document.getElementById('newCharaList');
+	var opt = list.getElementsByTagName('option');
+
+	if (list.options.length < 2){
+		let json, characters, affiliation, affl, optgroup;
+
+		hideInputs('');
+
+		let response = await fetch("{% url 'FE3HApp:currentunit_getunused' %}", {
+			method: 'GET',
+			headers: {'Content-Type': 'application/json', "X-CSRFToken": csrftoken},
+		});
+
+		json = await response.json();
+		characters = JSON.parse(json.characters);
+		affiliation = JSON.parse(json.affiliation);
+		affl = 0;
+		
+		for (let chara of characters) {
+			console.log(chara);
+			if (affl != chara.fields['affiliation']){
+				//console.log(affiliation[chara.fields['affiliation']-1].fields['affiliation']);
+				optgroup = document.createElement("optgroup");
+				optgroup.setAttribute("label", affiliation[chara.fields['affiliation']-1].fields['affiliation'])
+				list.appendChild(optgroup);
+				affl = chara.fields['affiliation'];
+			}
+			console.log(affl);
+			console.log(optgroup);
+			let newOption = new Option(chara.fields['name']);
+			newOption.setAttribute("value", chara.pk);
+			optgroup.appendChild(newOption);
+		}
+	}
+
+	dialog.showModal();
+}
+
+function closeDialog(dialogId) {
+	let dialog = document.getElementById(dialogId);
+	let list = dialog.getElementsByTagName("select");
+	list[0].selectedIndex = 0;
+	dialog.close();
+}
+
+async function sendAddRequest(dialogId) {
+	let list = document.getElementById('newCharaList');
+	let character_id = list.value;
+
+	closeDialog(dialogId);
+
+	let response = await fetch("{% url 'FE3HApp:currentunit_add' %}", {
+		method: 'POST',
+		headers: {'Content-Type': 'application/json', "X-CSRFToken": csrftoken},
+		body: JSON.stringify({'character_id': character_id}),
+	});
+
+	if (response['redirected'])
+		window.location.href = response['url'];
+	else {
+		let result = await response.text();
+		alert(result);
+	}
+
+}
+
+async function rowHidden(chara){
+	// First load data:
+	/*
+		1. Initialize the list for the selected character (GET only first time)
+		2. Hide classes depending on the level of the character
+		3. Get the innerHTML from data and set as the selected val of the dropdown on input
+		4. Transfer the data from input -> data 
+		5. Hide other inputs rows
+		6. Swap visibility of rows
+	*/
+
+	var inputTr = document.getElementById(chara+'-input');
+	var dataTr = document.getElementById(chara+'-data');
+
+	let classSelect = document.getElementById(chara + '-input-class');
+	if (classSelect.options.length < 2) {
+		await initialiseCharacterClassList(chara);
+	}
+
+	setListValue(inputTr, dataTr);
+	
+	hideInputs(chara);
+	var tr = [inputTr, dataTr];
+	for (let row of tr) {
+		if (row.classList.contains("hidden")){
+			row.classList.remove("hidden");
+		}
+		else
+			row.classList.add("hidden");
+	}
+	rowTransferData(inputTr, dataTr);
+}
+
+async function initialiseCharacterClassList(chara) {
+	let classSelect = document.getElementById(chara + '-input-class');
+	let response = await fetch("{% url 'FE3HApp:currentunit_classlist' %}", {
+			method: 'POST',
+			headers: {'Content-Type': 'application/json', "X-CSRFToken": csrftoken},
+			body: JSON.stringify({'character': chara}),
+	});
+
+	let result = await response.text();
+	let classList = JSON.parse(result);
+	let classGrade = null;
+	let optgroup;
+	for (let unitclass of classList) {
+		if (classGrade != unitclass.fields['grade']){
+			optgroup = document.createElement("optgroup");
+			optgroup.setAttribute("label", unitclass.fields['grade']);
+			optgroup.setAttribute("id", chara + '-input-grade-' +  unitclass.fields['grade']);
+			classSelect.appendChild(optgroup);
+			classGrade = unitclass.fields['grade'];
+		}
+		let newOption = new Option(unitclass.fields['name']);
+		newOption.setAttribute("value", unitclass.fields['name']);
+		optgroup.appendChild(newOption);
+	}
+	hideClass(chara+'-input');
+}
+
+function setListValue(inputTr, dataTr){
+	console.log("setListValue")
+	let data = document.getElementById(dataTr.id + '-class')
+	let input = document.getElementById(inputTr.id);
+	let list = input.getElementsByTagName("select");
+	let classSelect = list[0];
+	let options = classSelect.getElementsByTagName("option");
+	for (let i = 0; i < options.length; i++){
+		if (options[i].value == data.innerHTML){
+			console.log('found index')
+			list[0].selectedIndex = i;
+			break;
+		}
+	}
+}
+
+function rowTransferData(inputTr, dataTr) {
+	let transferContent = ['-lvl', '-class', '-hp', '-str', '-mag', '-dex', '-spd', '-lck', '-def', '-res', '-cha', '-sword', '-lance', '-axe', '-bow', '-brawl', '-reason', '-faith', '-auth', '-armor', '-ride', '-fly'];
+	let growthTransfer = ['-growth-hp', '-growth-str', '-growth-mag', '-growth-dex', '-growth-spd', '-growth-lck', '-growth-def', '-growth-res', '-growth-cha'];
+	for (let tag of transferContent)
+		dataTr.querySelector('#'+dataTr.id+tag).innerHTML = inputTr.querySelector('#'+inputTr.id+tag).value;
+	for (let growth of growthTransfer)
+		dataTr.querySelector('#'+dataTr.id+growth).innerHTML = inputTr.querySelector('#'+inputTr.id+growth).innerHTML;
+}
+
+function validateValue(inputId){
+	var inputField = document.getElementById(inputId);
+	var val = Number(inputField.value);
+
+	if (val < 0){
+		inputField.value = 0;
+	}
+	else if (val > Number(inputField.getAttribute('max')))
+		inputField.value = inputField.getAttribute('max');
+	else if (val == null)
+		inputField.value = 0;
+}
+
+async function updateGrowth(src){
+	let classSelect, tr, characterList, classList, classObj;
+	var growthTags = ['-growth-hp', '-growth-str', '-growth-mag', '-growth-dex', '-growth-spd', '-growth-lck', '-growth-def', '-growth-res', '-growth-cha']
+	var growthFields = ['hp_growth', 'str_growth', 'mag_growth', 'dex_growth', 'spd_growth', 'lck_growth', 'def_growth', 'res_growth', 'cha_growth'];
+	classSelect = document.getElementById(src+'-class');
+	tr = document.getElementById(src);
+	// ここをGET REQUESTで取得するように変更
+	let response = await fetch("{% url 'FE3HApp:currentunit_growthrates' %}", {
+			method: 'POST',
+			headers: {'Content-Type': 'application/json', "X-CSRFToken": csrftoken},
+			body: JSON.stringify({'character': src.split('-')[0], 'unit_class': classSelect.value}),
+	})
+
+	let result = await response.text()
+	result = JSON.parse(result);
+
+	characterObj = JSON.parse(result['character'])[0];
+	console.log(characterObj);
+	classObj = JSON.parse(result['unitclass'])[0];
+	console.log(classObj);
+	for (let i = 0; i < growthTags.length; i++) {
+		let characterGrowth = document.getElementById(src + growthTags[i]);
+		characterGrowth.value = characterObj.fields[growthFields[i]];
+		if (classObj)
+			characterGrowth.value = characterGrowth.value + classObj.fields[growthFields[i]];
+		characterGrowth.innerHTML = characterGrowth.value;
+	}
+}
+
+function hideInputs(chara){
+	console.log("hideInputs")
+	let tbody, tr;
+	tbody = document.getElementById("tbodyUnits");
+	tr = tbody.getElementsByTagName("tr");
+
+	for (let row of tr) {
+		if(chara === '' || !row.id.includes(chara)){
+			if(row.id.includes('input'))
+				row.classList.add("hidden");
+			else
+				row.classList.remove("hidden");
+		}
+	}
+	transferData(tbody);
+}
+
+function swapHidden() {
+	let tbody, tr;
+	tbody = document.getElementById("tbodyUnits");
+	tr = tbody.getElementsByTagName("tr");
+	for (let row of tr) {
+		if(row.classList.contains("hidden"))
+			row.classList.remove("hidden");
+		else
+			row.classList.add("hidden");
+		if(row.id.includes('input')){
+			hideClass(row.id);
+		}
+	}
+	transferData(tbody);
+}
+
+function transferData(tbody) {
+	var tr, srcTr, trgtTr;
+	srcTr = [];
+	trgtTr = [];
+	tr = tbody.getElementsByTagName("tr");
+
+	// Set the target and source tr
+	for (let row of tr) {
+		if(row.classList.contains("hidden")){
+			srcTr.push(row);
+		} else {
+			trgtTr.push(row);
+		}
+	}
+	for (let i = 0; i < srcTr.length; i++)
+		if (srcTr[i].id.includes('input'))
+			rowTransferData(srcTr[i], trgtTr[i]);
+}
+
+function hideClass(row){
+	validateValue(row+'-lvl');
+	let lvl = document.getElementById(row + '-lvl').value;
+	let optgroup;
+	if (lvl < 30) {
+		optgroup = document.getElementById(row + '-grade-最上級職');
+		console.log(optgroup)
+		optgroup.classList.add("hidden");
+	} else {
+		optgroup = document.getElementById(row + '-grade-最上級職');
+		optgroup.classList.remove("hidden");
+	}
+	if (lvl < 20) {
+		optgroup = document.getElementById(row + '-grade-上級職');
+		optgroup.classList.add("hidden");
+		optgroup = document.getElementById(row + '-grade-特級職');
+		optgroup.classList.add("hidden");
+	} else {
+		optgroup = document.getElementById(row + '-grade-上級職');
+		optgroup.classList.remove("hidden");
+		optgroup = document.getElementById(row + '-grade-特級職');
+		optgroup.classList.remove("hidden");
+	}
+	if (lvl < 10) {
+		optgroup = document.getElementById(row + '-grade-中級職');
+		optgroup.classList.add("hidden");
+	} else {
+		optgroup = document.getElementById(row + '-grade-中級職');
+		optgroup.classList.remove("hidden");
+	}
+	if (lvl < 5) {
+		optgroup = document.getElementById(row + '-grade-初級職');
+		optgroup.classList.add("hidden");
+	} else {
+		optgroup = document.getElementById(row + '-grade-初級職');
+		optgroup.classList.remove("hidden");
+	}
+}
+
+function addOnClickToTdOnLoad(srcTag){
+	var tbody = document.getElementById("tbodyUnits");
+	var tr = tbody.getElementsByTagName("tr");
+	var dataTr = [];
+
+	for (let row of tr)
+		if(row.id.includes(srcTag))
+			dataTr.push(row);
+
+	for (let row of dataTr) {
+		let td = row.getElementsByTagName("td");
+		for (let data of td) {
+			if (data.id.includes(srcTag))
+				data.addEventListener("click", () => { rowHidden(data.id.split('-')[0]) }, false)
+		}
+	}
+}
+addOnClickToTdOnLoad('-data');
+</script>

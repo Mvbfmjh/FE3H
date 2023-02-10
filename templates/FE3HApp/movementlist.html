@@ -1,0 +1,24 @@
+<a href="{% url 'FE3HApp:index' %}">< トップへ戻る</a><br>
+
+<div style="float: left;margin-right:10px">
+	<h1>移動種</h1>
+	<table border="2">
+		<thead>
+			<tr>
+				<th>移動種</th>
+			</tr>
+		</thead>
+		{% if movement_list %}
+			<tbody>
+				{% for movement in movement_list %}
+					<tr>
+						<td><a href="{% url 'FE3HApp:movement' movement.id %}">{{ movement.movement_type }}</a></td>
+					</tr>
+				{% endfor %}
+			</tbody>
+
+		{% else %}
+			<caption>No movements available.</caption>
+		{% endif %}
+	</table>	
+</div>

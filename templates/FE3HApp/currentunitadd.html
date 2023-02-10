@@ -1,0 +1,33 @@
+<form action="{% url 'FE3HApp:addunit' %}" method="post">
+	{% csrf_token %}
+	<fieldset>
+		<legend><h1>自軍キャラ追加</h1></legend>
+		<select name="character">
+			<option value selected>---------</option>
+			{% for affl in affiliation_list %}
+				<optgroup label="{{ affl.affiliation }}">
+				{% for character in character_list %}
+					{% if character.affiliation == affl %}
+					<option value="{{ character.id }}">{{ character.name }} ({{ character.gender.gender }})</option>
+					{% endif %}
+				{% endfor %}
+				</optgroup>
+			{% endfor %}
+		</select>
+		<!--
+		<select name="unitclass">
+			<option value selected>---------</option>
+			{% for grade in unitclass_grade_list %}
+				<optgroup label="{{ grade }}">
+				{% for unitclass in unitclass_list %}
+					{% if unitclass.grade == grade %}
+					<option value="{{ unitclass.id }}">{{ unitclass }}</option>
+					{% endif %}
+				{% endfor %}
+				</optgroup>
+			{% endfor %}
+		</select>
+	-->
+	</fieldset>
+	<input type="submit" value="追加">
+</form>

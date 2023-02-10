@@ -1,0 +1,205 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'FE3HApp/style.css' %}">
+
+<a href="{% url 'FE3HApp:index' %}">< トップへ戻る</a><br>
+
+<script>
+function filterByName() {
+	// Declare variables
+	document.getElementById("gender").value = "";
+	document.getElementById("movement").value = "";
+	document.getElementById("weakness").value = "";
+
+	var input, filter, table, tr, td, i, txtValue;
+	input = document.getElementById("unitClassName");
+	filter = input.value;
+	table = document.getElementById("UnitClassTable");
+	tr = table.getElementsByTagName("tr");
+
+	// Loop through all table rows, and hide those who don't match the search query
+	for (i = 0; i < tr.length; i++) {
+		td = tr[i].getElementsByTagName("td")[0];
+		if (td) {
+			txtValue = td.textContent || td.innerText;
+			if (txtValue.indexOf(filter) > -1) {
+				tr[i].style.display = "";
+			} else {
+				tr[i].style.display = "none";
+			}
+		}
+	}
+}
+
+function filterUnitClass(changeOrigin) {
+	var table, filterGender, filterMovement, filterWeakness, tr, i;
+	table = document.getElementById("UnitClassTable");
+	if (changeOrigin === 'movement') {
+		let weaknessList = [{% for weakness in weakness_list %}'{{ weakness.weakness }}',{% endfor %}];
+
+		filterGender = document.getElementById("gender").value;
+		filterMovement = document.getElementById("movement").value;
+		if (weaknessList.includes(filterMovement)) {
+			document.getElementById("weakness").value = filterMovement;
+		} else {
+			document.getElementById("weakness").value = "";
+		}
+		filterWeakness = document.getElementById("weakness").value;
+	} else if (changeOrigin === 'weakness') {
+		filterGender = document.getElementById("gender").value;
+		filterWeakness = document.getElementById("weakness").value;
+		document.getElementById("movement").value = "";
+		filterMovement = document.getElementById("movement").value;
+	} else {
+		filterGender = document.getElementById("gender").value;
+		filterMovement = document.getElementById("movement").value;
+		filterWeakness = document.getElementById("weakness").value;
+	}
+	tr = table.getElementsByTagName("tr");
+
+	var resultGender, resultMovement, resultWeakness;
+	resultGender = getFilterCheck('gender', tr, filterGender, 1);
+	resultMovement = getFilterCheck('movement', tr, filterMovement, 2);
+	resultWeakness = getFilterCheck('weakness', tr, filterWeakness, 3);
+	for (i = 0; i < tr.length; i++) {
+		let td;
+		td = tr[i].getElementsByTagName("td")[1];
+		if (td) {
+			if (resultGender[i] && resultMovement[i] && resultWeakness[i]) {
+				tr[i].style.display = "";
+				//console.log(i);
+				//console.log(tr[i]);
+			} else {
+				tr[i].style.display = "none";
+			}
+		}
+	}
+}
+
+function getFilterCheck(colName, tr, filterVal, col) {
+	var i, txtValue;
+	var resultList = [true];
+	if (!(filterVal === "")) {
+		for (i = 0; i < tr.length; i++) {
+			let td;
+			td = tr[i].getElementsByTagName("td")[col];
+			if (td) {
+				txtValue = td.textContent || td.innerText;
+				if (colName === 'movement') {
+					if (txtValue === filterVal) {
+						resultList.push(true);
+					} else {
+						resultList.push(false);
+					}
+				} else {
+					if (txtValue.includes(filterVal)){
+						resultList.push(true);
+					} else {
+						resultList.push(false);
+					}
+				}
+			}
+		}
+	} else {
+		for (i = 0; i < tr.length; i++) {
+			let td;
+			td = tr[i].getElementsByTagName("td")[col];
+			if (td) {
+				resultList.push(true);
+			}
+		}
+	}
+	return resultList
+}
+</script>
+
+
+<div style="float: left;margin-right:10px">
+	<h1>クラス</h1>
+	
+	<table border="2" id="UnitClassTable">
+		<thead>
+			<tr class="header">
+				<th style="width:150px" rowspan="2">クラス名<br>
+					<input type="text" id="unitClassName" onkeyup="filterByName()" placeholder="クラス名を入力...">
+				</th>
+				<th style="width:42px" rowspan="2">性別<br>
+					<select id="gender" name="gender" onchange="filterUnitClass(null)">
+						<option value="" selected>-</option>
+						{% for gen in gender %}
+							<option value="{{ gen }}">{{ gen }}</option>
+						{% endfor %}
+					</select>
+				</th>
+				<th style="width:50px" rowspan="2">移動<br>
+					<select id="movement" name="movement" onchange="filterUnitClass('movement')">
+						<option value="" selected>-</option>
+						{% for movement in movement_list %}
+							<option value="{{ movement.movement_type }}">{{ movement.movement_type }}</option>
+						{% endfor %}
+					</select>
+				</th>
+				<th style="width:70px" rowspan="2">有効<br>
+					<select id="weakness" name="weakness" onchange="filterUnitClass('weakness')">
+						<option value="" selected>-</option>
+						{% for weakness in weakness_list %}
+							<option value="{{ weakness.weakness }}">{{ weakness.weakness }}</option>
+						{% endfor %}
+					</select>
+				</th>
+
+				<!-- 列を追加 -->
+				<th colspan="9" style="text-align: center;">成長率</th>
+				<th colspan="9" style="text-align: center;">基礎</th>
+				<th colspan="11" style="text-align: center;">技能</th>
+			</tr>
+			<tr class="subheader">
+				<th>H<br>P</th>
+				<th>力</th>
+				<th>魔力</th>
+				<th>技</th>
+				<th>速さ</th>
+				<th>幸運</th>
+				<th>守備</th>
+				<th>魔防</th>
+				<th>魅力</th>
+
+				<th>H<br>P</th>
+				<th>力</th>
+				<th>魔力</th>
+				<th>技</th>
+				<th>速さ</th>
+				<th>幸運</th>
+				<th>守備</th>
+				<th>魔防</th>
+				<th>魅力</th>
+
+
+				<th>剣</th>
+				<th>槍</th>
+				<th>斧</th>
+				<th>弓</th>
+				<th>格</th>
+				<th>理</th>
+				<th>信</th>
+				<th>指</th>
+				<th>重</th>
+				<th>馬</th>
+				<th>飛</th>
+			</tr>
+		</thead>
+		{% if unitclass_list %}
+		<tbody>
+			{% for unitclass in unitclass_list %}
+				<tr>
+					<td><a href="{% url 'FE3HApp:unitclass' unitclass.id %}">{{ unitclass.name }}</a></td>
+					<td>{{ unitclass.gender.gender }}</td>
+					<td>{{ unitclass.movement.movement_type }}</td>
+					<td>{% for unitweakness in unitclass_weakness %}{% if unitweakness.class_id == unitclass %}{{ unitweakness.weakness_id.weakness}} {% endif %}{% endfor %}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+		{% else %}
+			<caption>No classes available.</caption>
+		{% endif %}
+	</table>	
+</div>

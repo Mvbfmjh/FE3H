@@ -1,0 +1,26 @@
+<a href="{% url 'FE3HApp:index' %}">< トップへ戻る</a><br>
+
+<div style="float: left;margin-right:10px">
+	<h1>所属</h1>
+	<table border="2">
+		<thead>
+			<tr>
+				<th>所属</th>
+			</tr>
+		</thead>
+		{% if affiliation_list %}
+			<tbody>
+				{% for affiliation in affiliation_list %}
+					{% if affiliation.id != 1 %}
+						<tr>
+							<td><a href="{% url 'FE3HApp:affiliation' affiliation.id %}">{{ affiliation.affiliation }}</a></td>
+						</tr>
+					{% endif %}
+				{% endfor %}
+			</tbody>
+
+		{% else %}
+			<caption>No affiliations available.</caption>
+		{% endif %}
+	</table>	
+</div>

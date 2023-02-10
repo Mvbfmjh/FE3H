@@ -1,0 +1,43 @@
+<a href="{% url 'FE3HApp:index' %}">< トップへ戻る</a><br>
+<a href="{% url 'FE3HApp:battalion_list' %}">< 騎士団へ戻る</a><br>
+
+<h1>{{ battalion.name }} - 所属：<a href="{% url 'FE3HApp:affiliation' battalion.affiliation.id %}">{{ battalion.affiliation.affiliation }}</a></h1>
+<h2>必須指揮レベル：{{ battalion.auth_requirement }}</h2>
+
+<div style="float: left;margin-right:10px">
+	<table border="2">
+		<thead>
+			<tr>
+				<th>戦力</th>
+				<th>物攻</th>
+				<th>魔攻</th>
+				<th>命中</th>
+				<th>必殺</th>
+				<th>回避</th>
+				<th>防御</th>
+				<th>耐魔</th>
+				<th>魅力</th>
+				<th>計略</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>{{ battalion.endurance }}</td>
+				<td>{{ battalion.physical }}</td>
+				<td>{{ battalion.magical }}</td>
+				<td>{{ battalion.hit_rate }}</td>
+				<td>{{ battalion.critical }}</td>
+				<td>{{ battalion.avoidance }}</td>
+				<td>{{ battalion.protection }}</td>
+				<td>{{ battalion.resistance }}</td>
+				<td>{{ battalion.charm }}</td>
+				<td>{{ battalion.gambit }}</td>
+			</tr>
+		</tbody>
+
+	</table>
+</div>
+
+
+			
+					
