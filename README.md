@@ -3,9 +3,13 @@ Web application for Fire Emblem: Three Houses (日本語). Select and add units 
 ファイアーエムブレム：風花雪月向けのウェブアプリ\
 ユニットを自軍へ追加し、ステータス・成長率・クラス・スキルを組み合わせてみよう！\
 
-NOTE: This is a Django Application, and as far as I understand, requires a machine with Django installed to run it\
+NOTE:\
+This is a Django Application, and as far as I understand, requires a machine with Django installed to run it\
 Start an application within Django and add the folders to it (... I guess? I haven't tested it yet.)
 
+ANOTHER NOTE:\
+Currently, I am working with <u>JP data</u>, so currently, the pages are *mainly* in Japanese (with some EN here and there).\
+I may work on making multiple locales for the webapp. (Currently, this is just a possibility)
 
 Build v0.1:
   - With the current build, it does not have the data stored within the database, nor does this build have the queries to insert it into the DB
