@@ -29,5 +29,6 @@ Things to work on next:
      - Which characters are able to learn it
      - Requirements
   - Page to assign battalions to Current Units
+  - Update Character page with possible classes and their growth rates - might help with deciding which class to change to
 
 ??Maybe I should add a reference page or something to dedicate where I got this info from??
