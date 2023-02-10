@@ -11,14 +11,14 @@ Build v0.1:
   - With the current build, it does not have the data stored within the database, nor does this build have the queries to insert it into the DB
     (I'll need to do something about that)
   - Pages for the following are made:
-     -- View playable character list
+     - View playable character list
         - View character Limits and growth rates
-     -- View all classes
+     - View all classes
         - View class growth rates, weakness, etc.
-     -- View all Battalions available in the game
-     -- View Affiliations (in other words, the nations that characters reside under)
-     -- View for movement type (this was just to test out views may remove in future builds)
-     -- View for Current Units in your army
+     - View all Battalions available in the game
+     - View Affiliations (in other words, the nations that characters reside under)
+     - View for movement type (this was just to test out views may remove in future builds)
+     - View for Current Units in your army
         - Add/remove units
         - Update their level, classes, stats
         - Also check a units growth rate depending on the character and selected class
