@@ -152,7 +152,8 @@ class Class_Weakness(models.Model):
 
 class CurrentUnit(models.Model):
 	character = models.OneToOneField(Character, on_delete=models.CASCADE)
-	unit_class = models.ForeignKey(UnitClass, on_delete=models.SET_NULL, null=True, default=None)
+	unit_class = models.ForeignKey(UnitClass, null=True, default=None, on_delete=models.SET_NULL)
+	battalion = models.ForeignKey(Battalion, null=True, default=None, on_delete=models.SET_NULL)
 	level = models.PositiveSmallIntegerField(default=0)
 
 	unit_hp = models.PositiveSmallIntegerField(default=0)

@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="{% static 'FE3HApp/style.css' %}">
 
 <a href="{% url 'FE3HApp:index' %}">< トップへ戻る</a><br>
+<a href="{% url 'FE3HApp:unitbattalion_list' %}">< 自軍ユニット騎士団配属</a><br>
 
 {% csrf_token %}
 <!--
@@ -11,7 +12,7 @@
 -->
 
 <div style="float: left;margin-right:10px">
-	<h1>自軍</h1>
+	<h1>自軍ユニット</h1>
 	<button id="saveButton" onclick="sendUpdateRequest()">保存</button>
 	<button id="addButton" onclick="openAddDialog()">追加</button>
 	<table border="2" id="CurrentUnitTable">
@@ -337,7 +338,7 @@
 				{% endfor %}
 			{% else %}
 				<tr>
-					<td colspan="33" style="text-align: center;">自軍キャラがいません</td>
+					<td colspan="33" style="text-align: center;">自軍ユニットがいません</td>
 				</tr>
 			{% endif %}
 		</tbody>

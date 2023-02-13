@@ -39,4 +39,10 @@ urlpatterns = [
     path('currentunits/getunused', views.getunusedchara, name='currentunit_getunused'),
     path('currentunits/getclasslist', views.getcharaunitclasslist, name='currentunit_classlist'),
     path('currentunits/getgrowthrates', views.getcharaclassgrowthrates, name='currentunit_growthrates'),
+
+    # Current-Battalion pages
+    path('unitbattalion/', views.currentunitbattalion, name='unitbattalion_list'),
+    path('unitbattalion/get', views.getbattalionlist, name='unitbattalion_get'),
+    path('unitbattalion/set', views.setunitbattalion, name='unitbattalion_set'),
+    path('unitbattalion/getchara', views.getcharacter, name='unit_get'),
 ]

@@ -1,7 +1,7 @@
 # FE3H
 Web application for Fire Emblem: Three Houses (日本語). Select and add units within your army and check: growth rates, stats, possible combinations of classes and skills, etc.\
 ファイアーエムブレム：風花雪月向けのウェブアプリ\
-ユニットを自軍へ追加し、ステータス・成長率・クラス・スキルを組み合わせてみよう！\
+ユニットを自軍へ追加し、ステータス・成長率・クラス・スキルを組み合わせてみよう！
 
 NOTE:\
 This is a Django Application, and as far as I understand, requires a machine with Django installed to run it\
@@ -32,9 +32,19 @@ Things to work on next:
   - Skill list
      - Which characters are able to learn it
      - Requirements
-  - Page to assign battalions to Current Units
+  - ~~Page to assign battalions to Current Units~~ Completed
   - Update Character page with possible classes and their growth rates - might help with deciding which class to change to
      - Along with the classes and growth rates, maybe also add the list of skills a character can learn -> clicking leads to a page showing requirements
+  - Add Weapons data model (for Hit Rate, Critical, Avoidance, etc. values - values related to engagements)
+     - Expecting model:
+       - Use        (int)
+       - Weight     (int)
+       - Might      (int)
+       - Hit rate   (int)
+       - Crit       (int)
+       - Rank       (Char)
+       - Magic      (Bool)
+       - Sacred     (Bool)
   - Realized, I should also separate my scripts into other files
 
 ??Maybe I should add a reference page or something to dedicate where I got this info from??

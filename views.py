@@ -283,3 +283,60 @@ def getcharaclassgrowthrates(request):
 			}
 			data = json.dumps(context)
 			return HttpResponse(data)
+
+def currentunitbattalion(request):
+	template_name = app_name + '/unitbattalionlist.html'
+	currentunits = CurrentUnit.objects.order_by('id')
+	context = {
+		'currentunits': currentunits,
+	}
+	return render(request, template_name, context)
+
+def getbattalionlist(request):
+	try:
+		battalions = Battalion.objects.order_by('id')
+		affiliations = Affiliation.objects.order_by('id')
+	except Exception as e:
+		print(str(e))
+		return HttpResponse(content="ERROR")
+	else:
+		json_serializer = serializers.get_serializer("json")()
+		battalion_json = json_serializer.serialize(battalions, ensure_ascii=False)
+		affiliation_json = json_serializer.serialize(affiliations, ensure_ascii=False)
+		content = {
+			'battalion_json': battalion_json,
+			'affiliation_json': affiliation_json,
+		}
+		data = json.dumps(content)
+		return HttpResponse(data)
+
+def getcharacter(request):
+	if request.method == 'POST':
+		try:
+			body = json.loads(request.body.decode('utf-8'))
+			print(body['character'])
+			chara = Character.objects.filter(name=body['character'])
+			character = chara[0]
+			unit = CurrentUnit.objects.filter(character=character)
+		except Exception as e:
+			print(str(e))
+			return HttpResponse(content="ERROR")
+		else:
+			json_serializer = serializers.get_serializer("json")()
+			unit_json = json_serializer.serialize(unit, ensure_ascii=False)
+			data = json.dumps(unit_json)
+			return HttpResponse(data)
+
+def setunitbattalion(request):
+	if request.method == 'POST':
+		try:
+			body = json.loads(request.body.decode('utf-8'))
+			chara = Character.objects.filter(name=body['character'])
+			character = chara[0]
+			unit = CurrentUnit.objects.filter(character=character)
+			unit.update(battalion=body['battalion'])
+		except Exception as e:
+			print(str(e))
+			return HttpResponse(content="ERROR")
+		else:
+			return HttpResponse(content="success")

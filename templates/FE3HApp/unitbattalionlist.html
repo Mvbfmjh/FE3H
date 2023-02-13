@@ -1,0 +1,61 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'FE3HApp/style.css' %}">
+
+<a href="{% url 'FE3HApp:index' %}">< トップへ戻る</a><br>
+<a href="{% url 'FE3HApp:currentunit_list' %}">< 自軍ユニット</a><br>
+
+{% csrf_token %}
+<div style="float: left;margin-right:10px">
+	<h1>自軍ユニット騎士団配属</h1>
+	<table border="2" id="UnitBattalionList">
+		<thead>
+			<tr>
+				<th rowspan="2">キャラ</th>
+				<th rowspan="2">指揮</th>
+				<th rowspan="2">騎士団</th>
+				<th rowspan="2">戦略</th>
+				<th colspan="8">ステータス</th>
+				<th rowspan="2">計略</th>
+			</tr>
+			<tr>
+				<th>物攻</th>
+				<th>魔攻</th>
+				<th>命中</th>
+				<th>必殺</th>
+				<th>回避</th>
+				<th>防御</th>
+				<th>耐魔</th>
+				<th>魅力</th>
+			</tr>
+		</thead>
+		<tbody id="tbodyUnits">
+		{% if currentunits %}
+		{% for unit in currentunits %}
+			<tr id="{{ unit.character.name }}">
+				<td>{{ unit.character.name }}</td>
+				<td id="{{ unit.character.name }}-subj">{{ unit.prof_authority }}</td>
+				<td>
+					<select id="{{ unit.character.name }}-btl" name="{{ unit.character.name }}-btl" onchange="setBattalion('{{ unit.character.name }}')">
+						<option selected value="{{ unit.battalion.pk }}">{{ unit.battalion.name }}</option>
+					</select>
+				</td>
+				<td id="{{ unit.character.name }}-btl-end"></td>
+				<td id="{{ unit.character.name }}-phy"></td>
+				<td id="{{ unit.character.name }}-mag"></td>
+				<td id="{{ unit.character.name }}-hit"></td>
+				<td id="{{ unit.character.name }}-crit"></td>
+				<td id="{{ unit.character.name }}-avd"></td>
+				<td id="{{ unit.character.name }}-prot"></td>
+				<td id="{{ unit.character.name }}-res"></td>
+				<td id="{{ unit.character.name }}-cha"></td>
+				<td id="{{ unit.character.name }}-btl-gambit"></td>
+			</tr>
+		{% endfor %}
+		{% else %}
+			<tr><td colspan="13" style="text-align: center;">自軍ユニットがいません</td></tr>
+		{% endif %}
+		</tbody>
+	</table>
+</div>
+
+<script src="{% static 'FE3HApp/unitbattalion.js' %}"></script>
